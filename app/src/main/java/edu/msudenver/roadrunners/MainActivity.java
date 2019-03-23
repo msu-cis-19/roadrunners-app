@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import edu.msudenver.roadrunners.activities.InventoryListActivity;
 
+/*Roadrunners Inventory Stage-3 Development*/
 public class MainActivity extends AppCompatActivity {
 
     private Button btnAddItem;
