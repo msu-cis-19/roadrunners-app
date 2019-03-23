@@ -1,0 +1,31 @@
+<resources>
+    <string name="app_name">Roadrunner Inventory</string>
+    <string name="txtTitle">Roadrunner Inventory</string>
+    <string name="txtSplash">RoadRunner Inventory System</string>
+    <string name="btnBack">Return to main screen</string>
+    <string name="txtSubTitle">Summary:</string>
+    <string name="txtAssetCount">"Number of assets:  "</string>
+    <string name="txtAssetValue">"Total Asset Value:   "</string>
+    <string name="btnAdditem">Add Item</string>
+    <string name="btnSearch">Search</string>
+    <string name="btnInvList">Inventory List</string>
+    <string name="item_name">Item Name</string>
+    <string name="quantity">Quantity</string>
+    <string name="brand">Brand</string>
+    <string name="model">Model</string>
+    <string name="box">Box</string>
+    <string name="supplier_name">Supplier Name</string>
+    <string name="save">Save</string>
+    <string name="cancel">Cancel</string>
+    <string name="qtyLabel">Qty:</string>
+    <string name="title_activity_inventory_edit">InventoryEditActivity</string>
+    <string name="btn_inventoryList">Inventory List</string>
+    <string name="costLabel">Cost:</string>
+    <string name="shelfLabel">Shelf:</string>
+    <string name="boxLabel">Box:</string>
+    <string name="modelLabel">Model:</string>
+    <string name="brandLabel">Brand:</string>
+    <string name="supplierLabel">Supplier:</string>
+    <string name="edit">Edit</string>
+    <string name="done">Done</string>
+</resources>
