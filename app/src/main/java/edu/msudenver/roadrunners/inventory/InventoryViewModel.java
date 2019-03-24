@@ -2,36 +2,44 @@ package edu.msudenver.roadrunners.inventory;
 
 import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
-import android.arch.lifecycle.LiveData;
 
+import java.util.ArrayList;
 import java.util.List;
-
-import edu.msudenver.roadrunners.db.InventoryRepository;
 
 
 /*
-* The InventoryViewModel maintains the data and state for the Inventory Views to query
-* */
+ * The InventoryViewModel maintains the data and state for the Inventory Views to query
+ * */
 
 public class InventoryViewModel extends AndroidViewModel {
-    private InventoryRepository repo;
+    private static final List<InventoryItem> items = new ArrayList<>();
+
+    static {
+        InventoryItem item1 = new InventoryItem(1, "20V Hammer Drill", 5, "A6", "Box C", "DCD771C2", "DeWalt", "Home Depot");
+        InventoryItem item2 = new InventoryItem(2, "Aviation Snip Set", 13, "B4", "Box D", "M123R", "Wiss", "Home Depot");
+
+        items.add(item1);
+        items.add(item2);
+    }
 
     public InventoryViewModel(Application application) {
         super(application);
-        repo = new InventoryRepository(application);
     }
 
-    public InventoryRepository getRepo() {
-        return repo;
+    public List<InventoryItem> getItems() {
+        return items;
     }
 
-    public LiveData<List<InventoryItem>> getItems() {
-        return repo.getItems();
+    public void addItem(InventoryItem item) {
+        items.add(item);
     }
 
-    public LiveData<InventoryItem> getItem(int id) {
-        return repo.getItem(id);
+    public InventoryItem getItem(int id) {
+        for (InventoryItem item : items) {
+            if (item.getId() == id) {
+                return item;
+            }
+        }
+        return null;
     }
-
-
 }

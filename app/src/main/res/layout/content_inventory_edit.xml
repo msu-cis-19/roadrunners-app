@@ -1,24 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".activities.InventoryEditActivity"
     tools:showIn="@layout/activity_inventory_edit">
 
     <LinearLayout
         android:id="@+id/linearLayout"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:orientation="horizontal">
 
         <EditText
             android:id="@+id/txtEditName"
@@ -33,87 +31,130 @@
             android:id="@+id/imgDetailItem"
             android:layout_width="150dp"
             android:layout_height="150dp"
-            android:padding="5dp"
             android:layout_weight="1"
+            android:padding="5dp"
+            app:srcCompat="@drawable/splash_inventory"
             tools:srcCompat="@tools:sample/backgrounds/scenic" />
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-        <EditText
-            android:id="@+id/txtEditCost"
+        <TableRow
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="Cost"
-            android:inputType="numberDecimal"
-            tools:text="Cost" />
+            android:layout_height="match_parent">
 
-        <EditText
-            android:id="@+id/txtEditQty"
+            <TextView android:text="@string/costLabel"
+                android:layout_width="wrap_content"/>
+
+            <EditText
+                android:id="@+id/txtEditCost"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/costLabel"
+                android:inputType="numberDecimal"
+                tools:text="Cost" />
+        </TableRow>
+
+        <TableRow
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="@string/quantity"
-            android:inputType="number"
-            tools:text="Quantity" />
+            android:layout_height="match_parent">
 
+            <TextView android:text="@string/quantityLabel"
+                android:layout_width="wrap_content"/>
+            <EditText
+                android:id="@+id/txtEditQty"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/quantity"
+                android:inputType="number"
+                tools:text="Quantity" />
+        </TableRow>
 
-        <EditText
-            android:id="@+id/txtEditShelf"
+        <TableRow
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="Shelf"
-            android:inputType="text"
-            tools:text="Shelf" />
+            android:layout_height="match_parent">
 
-        <EditText
-            android:id="@+id/txtEditBox"
+            <TextView android:text="@string/shelfLabel"
+                android:layout_width="wrap_content"/>
+            <EditText
+                android:id="@+id/txtEditShelf"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/shelfLabel"
+                android:inputType="text"
+                tools:text="Shelf" />
+        </TableRow>
+
+        <TableRow
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="@string/box"
-            android:inputType="textPersonName"
-            tools:text="Box" />
+            android:layout_height="match_parent">
 
-        <EditText
-            android:id="@+id/txtEditModel"
+            <TextView android:text="@string/boxLabel"
+                android:layout_width="wrap_content"/>
+            <EditText
+                android:id="@+id/txtEditBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/box"
+                android:inputType="textPersonName"
+                tools:text="Box" />
+        </TableRow>
+
+        <TableRow
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="@string/model"
-            android:inputType="textPersonName"
-            tools:text="Model" />
+            android:layout_height="match_parent">
 
-        <EditText
-            android:id="@+id/txtEditBrand"
+            <TextView android:text="@string/modelLabel"
+                android:layout_width="wrap_content"/>
+            <EditText
+                android:id="@+id/txtEditModel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/model"
+                android:inputType="textPersonName"
+                tools:text="Model" />
+        </TableRow>
+
+        <TableRow
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="@string/brand"
-            android:inputType="textPersonName"
-            tools:text="Brand" />
+            android:layout_height="match_parent">
 
-        <EditText
-            android:id="@+id/txtEditSupplier"
+            <TextView android:text="@string/brandLabel"
+                android:layout_width="wrap_content"/>
+            <EditText
+                android:id="@+id/txtEditBrand"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/brand"
+                android:inputType="textPersonName"
+                tools:text="Brand" />
+        </TableRow>
+
+        <TableRow
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="@string/supplier_name"
-            android:inputType="text"
-            tools:text="Supplier" />
+            android:layout_height="match_parent">
 
-    </LinearLayout>
+            <TextView android:text="@string/supplierLabel"
+                android:layout_width="wrap_content"/>
+            <EditText
+                android:id="@+id/txtEditSupplier"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/supplier_name"
+                android:inputType="text"
+                tools:text="Supplier" />
+        </TableRow>
+
+    </TableLayout>
 
 
-</android.support.constraint.ConstraintLayout>
+</LinearLayout>

@@ -1,13 +1,14 @@
 package edu.msudenver.roadrunners;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
 import edu.msudenver.roadrunners.activities.InventoryListActivity;
+import edu.msudenver.roadrunners.activities.SearchableActivity;
 
 /*Roadrunners Inventory Stage-3 Development*/
 public class MainActivity extends AppCompatActivity {
@@ -39,7 +40,8 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Toast.makeText(MainActivity.this,
                         "Pop up a search dialog", Toast.LENGTH_SHORT).show();
-
+                Intent intent = new Intent(MainActivity.this, SearchableActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -50,7 +52,5 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-
     }
 }

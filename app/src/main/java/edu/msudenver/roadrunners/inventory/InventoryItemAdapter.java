@@ -15,7 +15,7 @@ import java.util.List;
 import edu.msudenver.roadrunners.R;
 import edu.msudenver.roadrunners.activities.InventoryDetailActivity;
 
-public class InventoryItemAdapter extends RecyclerView.Adapter<InventoryItemAdapter.ItemViewHolder>{
+public class InventoryItemAdapter extends RecyclerView.Adapter<InventoryItemAdapter.ItemViewHolder> {
 
     private List<InventoryItem> itemsList;
 
@@ -42,16 +42,11 @@ public class InventoryItemAdapter extends RecyclerView.Adapter<InventoryItemAdap
             title = itemView.findViewById(R.id.txtItemTitle);
             shelf = itemView.findViewById(R.id.txtItemShelf);
             qty = itemView.findViewById(R.id.txtQty);
-
         }
     }
 
     public InventoryItemAdapter() {
         this.itemsList = new ArrayList<>();
-    }
-
-    public InventoryItemAdapter(List<InventoryItem> items) {
-        this.itemsList = items;
     }
 
     public void setItemsList(List<InventoryItem> items) {
@@ -69,6 +64,7 @@ public class InventoryItemAdapter extends RecyclerView.Adapter<InventoryItemAdap
     @Override
     public void onBindViewHolder(@NonNull ItemViewHolder itemViewHolder, int i) {
         InventoryItem item = itemsList.get(i);
+        System.out.println("Got item: " + item);
         itemViewHolder.id = item.getId();
         itemViewHolder.title.setText(item.getName());
         itemViewHolder.shelf.setText(item.getShelf());

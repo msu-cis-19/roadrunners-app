@@ -1,15 +1,14 @@
 package edu.msudenver.roadrunners.activities;
 
-import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import edu.msudenver.roadrunners.R;
@@ -18,7 +17,7 @@ import edu.msudenver.roadrunners.inventory.InventoryViewModel;
 
 public class InventoryEditActivity extends AppCompatActivity {
     private InventoryViewModel viewModel;
-    private LiveData<InventoryItem> liveItem;
+    private ImageView imgDetailItem;
     private EditText txtEditName, txtEditCost, txtEditQty, txtEditShelf, txtEditBox, txtEditModel,
             txtEditBrand, txtEditSupplier;
 
@@ -31,6 +30,7 @@ public class InventoryEditActivity extends AppCompatActivity {
 
         viewModel = ViewModelProviders.of(this).get(InventoryViewModel.class);
 
+        imgDetailItem = findViewById(R.id.imgDetailItem);
         txtEditName = findViewById(R.id.txtEditName);
         txtEditCost = findViewById(R.id.txtEditCost);
         txtEditQty = findViewById(R.id.txtEditQty);
@@ -42,30 +42,29 @@ public class InventoryEditActivity extends AppCompatActivity {
 
         final int itemId = getIntent().getIntExtra("itemId", -1);
         System.out.println("Editing item: " + itemId);
+        InventoryItem item = viewModel.getItem(itemId);
+        if (item != null) {
+            txtEditName.setText(item.getName());
+            txtEditCost.setText(String.valueOf(item.getCost()));
+            txtEditQty.setText(String.valueOf(item.getQuantity()));
+            txtEditShelf.setText(item.getShelf());
+            txtEditBox.setText(item.getBox());
+            txtEditModel.setText(item.getModel());
+            txtEditBrand.setText(item.getBrand());
+            txtEditSupplier.setText(item.getSupplier());
+        }
 
-        liveItem = viewModel.getItem(itemId);
-        liveItem.observe(this, new Observer<InventoryItem>() {
+        imgDetailItem.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onChanged(@Nullable InventoryItem item) {
-                if (item != null) {
-                    txtEditName.setText(item.getName());
-                    txtEditCost.setText(String.valueOf(item.getCost()));
-                    txtEditQty.setText(String.valueOf(item.getQuantity()));
-                    txtEditShelf.setText(item.getShelf());
-                    txtEditBox.setText(item.getBox());
-                    txtEditModel.setText(item.getModel());
-                    txtEditBrand.setText(item.getBrand());
-                    txtEditSupplier.setText(item.getSupplier());
-                }
+            public void onClick(View v) {
+                Toast.makeText(InventoryEditActivity.this, "Start ACTION_IMAGE_CAPTURE intent", Toast.LENGTH_LONG).show();
             }
         });
-
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.edit_create_menu, menu);
-
         return true;
     }
 
@@ -74,7 +73,6 @@ public class InventoryEditActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.actionSaveItem:
                 saveItem();
-                Toast.makeText(this, "Item Updated", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.actionEditDone:
                 finish();
@@ -87,18 +85,6 @@ public class InventoryEditActivity extends AppCompatActivity {
     }
 
     private void saveItem() {
-        InventoryItem item = liveItem.getValue();
-        assert (item != null);
-
-        item.setName(txtEditName.getText().toString());
-        item.setCost(Double.parseDouble(txtEditCost.getText().toString()));
-        item.setQuantity(Integer.parseInt(txtEditQty.getText().toString()));
-        item.setShelf(txtEditShelf.getText().toString());
-        item.setBox(txtEditBox.getText().toString());
-        item.setModel(txtEditModel.getText().toString());
-        item.setBrand(txtEditBrand.getText().toString());
-        item.setSupplier(txtEditSupplier.getText().toString());
-
-        viewModel.getRepo().asyncUpdateItems(item);
+        Toast.makeText(this, "Saving item to persistent storage", Toast.LENGTH_LONG).show();
     }
 }

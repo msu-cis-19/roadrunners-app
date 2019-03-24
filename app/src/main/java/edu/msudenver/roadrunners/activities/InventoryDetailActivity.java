@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.widget.TextView;
 
 import java.text.NumberFormat;
+import java.util.stream.Collectors;
 
 import edu.msudenver.roadrunners.R;
 import edu.msudenver.roadrunners.inventory.InventoryItem;
@@ -48,24 +49,37 @@ public class InventoryDetailActivity extends AppCompatActivity {
         int itemId = getIntent().getIntExtra("itemId", -1);
         System.out.println("Getting item details for item id: " + itemId);
 
-        LiveData<InventoryItem> liveItem = viewModel.getItem(itemId);
-        liveItem.observe(this, new Observer<InventoryItem>() {
-            @Override
-            public void onChanged(@Nullable InventoryItem item) {
-                if (item != null) {
-                    System.out.println("Item name is: " + item.getName());
-                    setItemId(item.getId());
-                    txtTitle.setText(item.getName());
-                    txtCost.setText(currencyFormatter.format(item.getCost()));
-                    txtQty.setText(String.valueOf(item.getQuantity()));
-                    txtShelf.setText(item.getShelf());
-                    txtBox.setText(item.getBox());
-                    txtModel.setText(item.getModel());
-                    txtBrand.setText(item.getBrand());
-                    txtSupplier.setText(item.getSupplier());
-                }
-            }
-        });
+        InventoryItem item = viewModel.getItem(itemId);
+        if(item != null) {
+            setItemId(item.getId());
+            txtTitle.setText(item.getName());
+            txtCost.setText(currencyFormatter.format(item.getCost()));
+            txtQty.setText(String.valueOf(item.getQuantity()));
+            txtShelf.setText(item.getShelf());
+            txtBox.setText(item.getBox());
+            txtModel.setText(item.getModel());
+            txtBrand.setText(item.getBrand());
+            txtSupplier.setText(item.getSupplier());
+        }
+
+//        LiveData<InventoryItem> liveItem = viewModel.getItem(itemId);
+//        liveItem.observe(this, new Observer<InventoryItem>() {
+//            @Override
+//            public void onChanged(@Nullable InventoryItem item) {
+//                if (item != null) {
+//                    System.out.println("Item name is: " + item.getName());
+//                    setItemId(item.getId());
+//                    txtTitle.setText(item.getName());
+//                    txtCost.setText(currencyFormatter.format(item.getCost()));
+//                    txtQty.setText(String.valueOf(item.getQuantity()));
+//                    txtShelf.setText(item.getShelf());
+//                    txtBox.setText(item.getBox());
+//                    txtModel.setText(item.getModel());
+//                    txtBrand.setText(item.getBrand());
+//                    txtSupplier.setText(item.getSupplier());
+//                }
+//            }
+//        });
     }
 
     private void setItemId(int itemId) {
@@ -80,7 +94,7 @@ public class InventoryDetailActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch(item.getItemId()) {
+        switch (item.getItemId()) {
             case R.id.actionEditItem:
                 Intent intent = new Intent(this, InventoryEditActivity.class);
                 intent.putExtra("itemId", itemId);
