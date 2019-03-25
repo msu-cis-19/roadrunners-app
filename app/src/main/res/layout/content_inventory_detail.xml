@@ -57,6 +57,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginRight="10dp"
+                    android:layout_weight=".3"
                     android:text="@string/costLabel"
                     android:textSize="24sp" />
 
@@ -64,6 +65,7 @@
                     android:id="@+id/txtViewCost"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_weight=".7"
                     android:textSize="24sp"
                     tools:text="Cost" />
             </TableRow>
@@ -76,6 +78,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginRight="10dp"
+                    android:layout_weight=".3"
                     android:text="@string/qtyLabel"
                     android:textSize="24sp" />
 
@@ -83,6 +86,7 @@
                     android:id="@+id/txtViewQty"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_weight=".7"
                     android:textSize="24sp"
                     tools:text="Qty" />
             </TableRow>
@@ -95,6 +99,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginRight="10dp"
+                    android:layout_weight=".3"
                     android:text="@string/shelfLabel"
                     android:textSize="24sp" />
 
@@ -102,6 +107,7 @@
                     android:id="@+id/txtViewShelf"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_weight=".7"
                     android:textSize="24sp"
                     tools:text="Shelf" />
             </TableRow>
@@ -114,6 +120,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginRight="10dp"
+                    android:layout_weight=".3"
                     android:text="@string/boxLabel"
                     android:textSize="24sp" />
 
@@ -121,6 +128,7 @@
                     android:id="@+id/txtViewBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_weight=".7"
                     android:textSize="24sp"
                     tools:text="Box" />
             </TableRow>
@@ -133,6 +141,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginRight="10dp"
+                    android:layout_weight=".3"
                     android:text="@string/modelLabel"
                     android:textSize="24sp" />
 
@@ -140,6 +149,7 @@
                     android:id="@+id/txtViewModel"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_weight=".7"
                     android:textSize="24sp"
                     tools:text="Model" />
             </TableRow>
@@ -152,6 +162,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginRight="10dp"
+                    android:layout_weight=".3"
                     android:text="@string/brandLabel"
                     android:textSize="24sp" />
 
@@ -159,6 +170,7 @@
                     android:id="@+id/txtViewBrand"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_weight=".7"
                     android:textSize="24sp"
                     tools:text="Brand" />
 
@@ -172,6 +184,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginRight="10dp"
+                    android:layout_weight=".3"
                     android:text="@string/supplierLabel"
                     android:textSize="24sp" />
 
@@ -179,6 +192,7 @@
                     android:id="@+id/txtViewSupplier"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_weight=".7"
                     android:textSize="24sp"
                     tools:text="Supplier" />
 

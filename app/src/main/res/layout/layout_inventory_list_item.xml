@@ -43,16 +43,35 @@
                 android:id="@+id/txtShelfLbl"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Shelf:"
+                android:text="@string/shelfLabel"
                 android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/txtItemShelf"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:paddingLeft="5dp"
                 android:textAlignment="center"
                 android:textSize="16sp"
                 tools:text="Loc" />
+
+            <TextView
+                android:id="@+id/txtBoxLbl"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingLeft="10dp"
+                android:text="@string/boxLabel"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/txtItemBox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingLeft="5dp"
+                android:textSize="16sp"
+                tools:text="BoxName" />
 
         </LinearLayout>
 

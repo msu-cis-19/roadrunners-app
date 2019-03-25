@@ -16,10 +16,11 @@ public class InventoryItem {
     public InventoryItem() {
     }
 
-    public InventoryItem(int id, String name, int quantity, String shelf, String box, String model,
+    public InventoryItem(int id, String name, double cost, int quantity, String shelf, String box, String model,
                          String brand, String supplier) {
         this.id = id;
         this.name = name;
+        this.cost = cost;
         this.quantity = quantity;
         this.shelf = shelf;
         this.box = box;

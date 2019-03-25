@@ -23,6 +23,7 @@ public class InventoryItemAdapter extends RecyclerView.Adapter<InventoryItemAdap
         private int id;
         private TextView title;
         private TextView shelf;
+        private TextView box;
         private TextView qty;
 
         ItemViewHolder(@NonNull final View itemView) {
@@ -41,6 +42,7 @@ public class InventoryItemAdapter extends RecyclerView.Adapter<InventoryItemAdap
 
             title = itemView.findViewById(R.id.txtItemTitle);
             shelf = itemView.findViewById(R.id.txtItemShelf);
+            box = itemView.findViewById(R.id.txtItemBox);
             qty = itemView.findViewById(R.id.txtQty);
         }
     }
@@ -68,6 +70,7 @@ public class InventoryItemAdapter extends RecyclerView.Adapter<InventoryItemAdap
         itemViewHolder.id = item.getId();
         itemViewHolder.title.setText(item.getName());
         itemViewHolder.shelf.setText(item.getShelf());
+        itemViewHolder.box.setText(item.getBox());
         itemViewHolder.qty.setText(String.valueOf(item.getQuantity()));
     }
 
