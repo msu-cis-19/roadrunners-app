@@ -7,6 +7,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -17,9 +18,20 @@ import edu.msudenver.roadrunners.inventory.InventoryViewModel;
 
 public class InventoryEditActivity extends AppCompatActivity {
     private InventoryViewModel viewModel;
+    private int itemId;
     private ImageView imgDetailItem;
     private EditText txtEditName, txtEditCost, txtEditQty, txtEditShelf, txtEditBox, txtEditModel,
             txtEditBrand, txtEditSupplier;
+    private Button btnDelete;
+
+    private View.OnClickListener deleteItemListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Toast.makeText(InventoryEditActivity.this,
+                    "Will delete item with id: " + getItemId(),
+                    Toast.LENGTH_LONG).show();
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +52,10 @@ public class InventoryEditActivity extends AppCompatActivity {
         txtEditBrand = findViewById(R.id.txtEditBrand);
         txtEditSupplier = findViewById(R.id.txtEditSupplier);
 
-        final int itemId = getIntent().getIntExtra("itemId", -1);
+        btnDelete = findViewById(R.id.btnDeleteItem);
+        btnDelete.setOnClickListener(deleteItemListener);
+
+        itemId = getIntent().getIntExtra("itemId", -1);
         System.out.println("Editing item: " + itemId);
         InventoryItem item = viewModel.getItem(itemId);
         if (item != null) {
@@ -80,11 +95,14 @@ public class InventoryEditActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
-
         return true;
     }
 
     private void saveItem() {
         Toast.makeText(this, "Saving item to persistent storage", Toast.LENGTH_LONG).show();
+    }
+
+    private int getItemId() {
+        return itemId;
     }
 }
