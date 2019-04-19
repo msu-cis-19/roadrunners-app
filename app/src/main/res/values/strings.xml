@@ -30,4 +30,5 @@
     <string name="done">Done</string>
     <string name="quantityLabel">Quantity:</string>
     <string name="txtInventoryListTitle">Inventory List</string>
+    <string name="warnNameRequired">Name is required</string>
 </resources>

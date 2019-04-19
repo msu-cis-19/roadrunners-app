@@ -1,16 +1,21 @@
 package edu.msudenver.roadrunners.activities;
 
 import android.app.SearchManager;
+import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.widget.Toast;
 
+import java.util.List;
+
 import edu.msudenver.roadrunners.R;
+import edu.msudenver.roadrunners.inventory.InventoryItem;
 import edu.msudenver.roadrunners.inventory.InventoryItemAdapter;
 import edu.msudenver.roadrunners.inventory.InventoryViewModel;
 
@@ -28,7 +33,13 @@ public class SearchableActivity extends AppCompatActivity {
         viewModel = ViewModelProviders.of(this).get(InventoryViewModel.class);
 
         adapter = new InventoryItemAdapter();
-        adapter.setItemsList(viewModel.getItems());
+        viewModel.getItems().observe(this, new Observer<List<InventoryItem>>() {
+            @Override
+            public void onChanged(@Nullable List<InventoryItem> inventoryItems) {
+                adapter.setItemsList(inventoryItems);
+            }
+        });
+
         recyclerView = findViewById(R.id.rvSearchList);
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         recyclerView.setAdapter(adapter);

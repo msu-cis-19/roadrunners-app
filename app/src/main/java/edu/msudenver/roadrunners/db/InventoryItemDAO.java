@@ -23,10 +23,15 @@ public interface InventoryItemDAO {
     @Query("SELECT * FROM items WHERE id = (:id)")
     LiveData<InventoryItem> getItem(int id);
 
+    @Query("SELECT COUNT(*) FROM items")
+    LiveData<Integer> getCount();
+
     @Update
     void updateItem(InventoryItem item);
 
     @Delete
     void deleteItem(InventoryItem item);
 
+    @Query("SELECT SUM(cost * quantity) FROM items GROUP BY id")
+    LiveData<Double> getInventoryValue();
 }

@@ -8,18 +8,19 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
 import java.text.NumberFormat;
-import java.util.stream.Collectors;
 
 import edu.msudenver.roadrunners.R;
 import edu.msudenver.roadrunners.inventory.InventoryItem;
 import edu.msudenver.roadrunners.inventory.InventoryViewModel;
 
 public class InventoryDetailActivity extends AppCompatActivity {
+    private static final String TAG = InventoryDetailActivity.class.getName();
     private InventoryViewModel viewModel;
     private int itemId;
     private TextView txtTitle, txtCost, txtQty, txtShelf, txtBox, txtModel, txtBrand, txtSupplier;
@@ -47,39 +48,26 @@ public class InventoryDetailActivity extends AppCompatActivity {
         viewModel = ViewModelProviders.of(this).get(InventoryViewModel.class);
 
         int itemId = getIntent().getIntExtra("itemId", -1);
-        System.out.println("Getting item details for item id: " + itemId);
+        Log.i(TAG, "Retrieving item details for item (id): " + itemId);
 
-        InventoryItem item = viewModel.getItem(itemId);
-        if(item != null) {
-            setItemId(item.getId());
-            txtTitle.setText(item.getName());
-            txtCost.setText(currencyFormatter.format(item.getCost()));
-            txtQty.setText(String.valueOf(item.getQuantity()));
-            txtShelf.setText(item.getShelf());
-            txtBox.setText(item.getBox());
-            txtModel.setText(item.getModel());
-            txtBrand.setText(item.getBrand());
-            txtSupplier.setText(item.getSupplier());
-        }
-
-//        LiveData<InventoryItem> liveItem = viewModel.getItem(itemId);
-//        liveItem.observe(this, new Observer<InventoryItem>() {
-//            @Override
-//            public void onChanged(@Nullable InventoryItem item) {
-//                if (item != null) {
-//                    System.out.println("Item name is: " + item.getName());
-//                    setItemId(item.getId());
-//                    txtTitle.setText(item.getName());
-//                    txtCost.setText(currencyFormatter.format(item.getCost()));
-//                    txtQty.setText(String.valueOf(item.getQuantity()));
-//                    txtShelf.setText(item.getShelf());
-//                    txtBox.setText(item.getBox());
-//                    txtModel.setText(item.getModel());
-//                    txtBrand.setText(item.getBrand());
-//                    txtSupplier.setText(item.getSupplier());
-//                }
-//            }
-//        });
+        LiveData<InventoryItem> liveItem = viewModel.getItem(itemId);
+        liveItem.observe(this, new Observer<InventoryItem>() {
+            @Override
+            public void onChanged(@Nullable InventoryItem item) {
+                if (item != null) {
+                    Log.d(TAG, "Item name is: " + item.getName());
+                    setItemId(item.getId());
+                    txtTitle.setText(item.getName());
+                    txtCost.setText(currencyFormatter.format(item.getCost()));
+                    txtQty.setText(String.valueOf(item.getQuantity()));
+                    txtShelf.setText(item.getShelf());
+                    txtBox.setText(item.getBox());
+                    txtModel.setText(item.getModel());
+                    txtBrand.setText(item.getBrand());
+                    txtSupplier.setText(item.getSupplier());
+                }
+            }
+        });
     }
 
     private void setItemId(int itemId) {
@@ -98,7 +86,7 @@ public class InventoryDetailActivity extends AppCompatActivity {
             case R.id.actionEditItem:
                 Intent intent = new Intent(this, InventoryEditActivity.class);
                 intent.putExtra("itemId", itemId);
-                System.out.println("Editing item");
+                Log.d(TAG, "Editing item: " + itemId);
                 startActivity(intent);
                 break;
             default:

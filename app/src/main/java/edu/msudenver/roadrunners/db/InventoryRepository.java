@@ -43,6 +43,14 @@ public class InventoryRepository {
         task.execute(items);
     }
 
+    public LiveData<Integer> getItemCount() {
+        return itemDAO.getCount();
+    }
+
+    public LiveData<Double> getInventoryValue() {
+        return itemDAO.getInventoryValue();
+    }
+
     private static class UpdateAsync extends AsyncTask<InventoryItem, Void, Void> {
 
         private final InventoryItemDAO dao;

@@ -1,7 +1,12 @@
 package edu.msudenver.roadrunners.inventory;
 
 
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.PrimaryKey;
+
+@Entity(tableName = "items")
 public class InventoryItem {
+    @PrimaryKey(autoGenerate = true)
     private Integer id;
 
     private String name;
@@ -16,18 +21,18 @@ public class InventoryItem {
     public InventoryItem() {
     }
 
-    public InventoryItem(int id, String name, double cost, int quantity, String shelf, String box, String model,
-                         String brand, String supplier) {
-        this.id = id;
-        this.name = name;
-        this.cost = cost;
-        this.quantity = quantity;
-        this.shelf = shelf;
-        this.box = box;
-        this.model = model;
-        this.brand = brand;
-        this.supplier = supplier;
-    }
+//    public InventoryItem(int id, String name, double cost, int quantity, String shelf, String box, String model,
+//                         String brand, String supplier) {
+//        this.id = id;
+//        this.name = name;
+//        this.cost = cost;
+//        this.quantity = quantity;
+//        this.shelf = shelf;
+//        this.box = box;
+//        this.model = model;
+//        this.brand = brand;
+//        this.supplier = supplier;
+//    }
 
     public Integer getId() {
         return id;
