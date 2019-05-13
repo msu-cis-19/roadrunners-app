@@ -27,14 +27,29 @@
             android:hint="@string/item_name"
             android:inputType="textPersonName" />
 
-        <ImageView
-            android:id="@+id/imgDetailItem"
-            android:layout_width="125dp"
-            android:layout_height="125dp"
-            android:layout_weight="1"
-            android:padding="5dp"
-            app:srcCompat="@drawable/splash_inventory"
-            tools:srcCompat="@tools:sample/backgrounds/scenic" />
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <ImageView
+                android:id="@+id/imgDetailItem"
+                android:layout_width="125dp"
+                android:layout_height="125dp"
+                android:layout_weight="1"
+                android:contentDescription="Tap to add item image"
+                android:padding="5dp"
+                app:srcCompat="@drawable/splash_inventory"
+                tools:srcCompat="@tools:sample/backgrounds/scenic" />
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|right"
+                app:srcCompat="@android:drawable/ic_menu_camera" />
+        </FrameLayout>
+
     </LinearLayout>
 
     <TableLayout

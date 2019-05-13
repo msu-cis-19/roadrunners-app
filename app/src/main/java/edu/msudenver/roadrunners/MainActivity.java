@@ -15,19 +15,28 @@ import java.text.NumberFormat;
 
 import edu.msudenver.roadrunners.activities.InventoryEditActivity;
 import edu.msudenver.roadrunners.activities.InventoryListActivity;
-import edu.msudenver.roadrunners.activities.SearchableActivity;
 import edu.msudenver.roadrunners.inventory.InventoryViewModel;
 
-/*Roadrunners Inventory Stage-3 Development*/
+/*Roadrunners Inventory Final Stage
+* Team Roadrunners - CIS 4160
+* Zachery Brady
+* Dillon Bohlander
+* Morbia Neal
+*
+* */
+
+
+
 public class MainActivity extends AppCompatActivity {
-    private InventoryViewModel viewModel;
     private static final NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance();
+
     static {
         currencyFormatter.setMaximumFractionDigits(2);
+        currencyFormatter.setMinimumFractionDigits(2);
     }
 
+    private InventoryViewModel viewModel;
     private Button btnAddItem;
-    private Button btnSearch;
     private Button btnInvList;
     private TextView assetCount;
     private TextView assetValue;
@@ -40,7 +49,6 @@ public class MainActivity extends AppCompatActivity {
         viewModel = ViewModelProviders.of(this).get(InventoryViewModel.class);
 
         btnAddItem = findViewById(R.id.btnAddItem);
-        btnSearch = findViewById(R.id.btnSearch);
         btnInvList = findViewById(R.id.btnInvList);
         assetCount = findViewById(R.id.txtAssetCount);
         assetValue = findViewById(R.id.txtAssetValue);
@@ -48,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
         viewModel.getItemCount().observe(this, new Observer<Integer>() {
             @Override
             public void onChanged(@Nullable Integer value) {
-                if(value != null) {
+                if (value != null) {
                     assetCount.setText("Item Count: " + String.valueOf(value));
                 }
 
@@ -61,6 +69,9 @@ public class MainActivity extends AppCompatActivity {
                 System.out.println("Inventory value changed");
                 if (value != null) {
                     assetValue.setText("Total Value: " + currencyFormatter.format(value));
+                } else {
+                    System.out.println("Value is null");
+                    assetValue.setText("Total Value: $0.00");
                 }
             }
         });
@@ -72,16 +83,6 @@ public class MainActivity extends AppCompatActivity {
                         "Take the user to create item screen", Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(MainActivity.this, InventoryEditActivity.class));
 
-            }
-        });
-
-        btnSearch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(MainActivity.this,
-                        "Pop up a search dialog", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(MainActivity.this, SearchableActivity.class);
-                startActivity(intent);
             }
         });
 

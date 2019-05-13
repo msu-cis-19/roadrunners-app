@@ -10,20 +10,11 @@ import edu.msudenver.roadrunners.db.InventoryRepository;
 
 
 /*
- * The InventoryViewModel maintains the data and state for the Inventory Views to query
+ * The InventoryViewModel maintains the data and state for the Inventory (Activity) Views to query
  * */
 
 public class InventoryViewModel extends AndroidViewModel {
     private final InventoryRepository repository;
-//    private static final List<InventoryItem> items = new ArrayList<>();
-
-//    static {
-//        InventoryItem item1 = new InventoryItem(1, "20V Hammer Drill", 99.99, 5, "A6", "Box C", "DCD771C2", "DeWalt", "Home Depot");
-//        InventoryItem item2 = new InventoryItem(2, "Aviation Snip Set", 23.95, 13, "B4", "Box D", "M123R", "Wiss", "Home Depot");
-//
-//        items.add(item1);
-//        items.add(item2);
-//    }
 
     public InventoryViewModel(Application application) {
         super(application);
@@ -31,12 +22,20 @@ public class InventoryViewModel extends AndroidViewModel {
 
     }
 
-    public LiveData<List<InventoryItem>> getItems(){
+    public LiveData<List<InventoryItem>> getItems() {
         return repository.getItems();
     }
 
     public LiveData<InventoryItem> getItem(int id) {
         return repository.getItem(id);
+    }
+
+    public LiveData<Integer> getItemCount() {
+        return repository.getItemCount();
+    }
+
+    public LiveData<Double> getInventoryValue() {
+        return repository.getInventoryValue();
     }
 
     public void addItem(InventoryItem item) {
@@ -49,14 +48,6 @@ public class InventoryViewModel extends AndroidViewModel {
 
     public void deleteItem(InventoryItem item) {
         repository.asyncDeleteItems(item);
-    }
-
-    public LiveData<Integer> getItemCount() {
-        return repository.getItemCount();
-    }
-
-    public LiveData<Double> getInventoryValue() {
-        return repository.getInventoryValue();
     }
 
 }

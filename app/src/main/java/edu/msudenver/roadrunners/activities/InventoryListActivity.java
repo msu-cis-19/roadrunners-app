@@ -10,7 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.Toast;
+import android.widget.SearchView;
 
 import java.util.List;
 
@@ -24,6 +24,7 @@ public class InventoryListActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private InventoryViewModel viewModel;
     private FloatingActionButton actionButton;
+    private SearchView searchView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +34,7 @@ public class InventoryListActivity extends AppCompatActivity {
         viewModel = ViewModelProviders.of(this).get(InventoryViewModel.class);
         recyclerView = findViewById(R.id.rvInventoryList);
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-
+        searchView = findViewById(R.id.searchView);
 
         actionButton = findViewById(R.id.fabAddItem);
         actionButton.setOnClickListener(new View.OnClickListener() {
@@ -46,10 +47,24 @@ public class InventoryListActivity extends AppCompatActivity {
         adapter = new InventoryItemAdapter();
         recyclerView.setAdapter(adapter);
 
+
         viewModel.getItems().observe(this, new Observer<List<InventoryItem>>() {
             @Override
             public void onChanged(@Nullable List<InventoryItem> inventoryItems) {
                 adapter.setItemsList(inventoryItems);
+            }
+        });
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                return onQueryTextChange(s);
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                adapter.getFilter().filter(s);
+                return true;
             }
         });
     }

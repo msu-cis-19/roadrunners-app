@@ -4,8 +4,8 @@
     <string name="txtSplash">RoadRunner Inventory System</string>
     <string name="btnBack">Return to main screen</string>
     <string name="txtSubTitle">Summary:</string>
-    <string name="txtAssetCount">"Number of assets:  100"</string>
-    <string name="txtAssetValue">"Total Asset Value:   $3,000"</string>
+    <string name="txtAssetCount">"Number of assets: 0"</string>
+    <string name="txtAssetValue">"Total Asset Value:  $0"</string>
     <string name="btnAdditem">Add Item</string>
     <string name="btnSearch">Search</string>
     <string name="btnInvList">Inventory List</string>
@@ -31,4 +31,5 @@
     <string name="quantityLabel">Quantity:</string>
     <string name="txtInventoryListTitle">Inventory List</string>
     <string name="warnNameRequired">Name is required</string>
+    <string name="searchHint">Enter a search term</string>
 </resources>

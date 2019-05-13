@@ -4,6 +4,8 @@ import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
@@ -24,8 +26,11 @@ import edu.msudenver.roadrunners.inventory.InventoryViewModel;
 
 public class InventoryEditActivity extends AppCompatActivity {
     private static final String TAG = InventoryEditActivity.class.getName();
+    private static final int REQUEST_SNAPSHOT = 1;
+
     private InventoryViewModel viewModel;
     private int itemId;
+    private Bitmap imgBitmap;
     private ImageView imgDetailItem;
     private EditText txtEditName, txtEditCost, txtEditQty, txtEditShelf, txtEditBox, txtEditModel,
             txtEditBrand, txtEditSupplier;
@@ -34,17 +39,16 @@ public class InventoryEditActivity extends AppCompatActivity {
     private View.OnClickListener deleteItemListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            Toast.makeText(InventoryEditActivity.this,
-                    "Will delete item with id: " + getItemId(),
-                    Toast.LENGTH_LONG).show();
-            new AlertDialog.Builder(InventoryEditActivity.this).setMessage("Are you sure you want to delete this item?")
+            new AlertDialog.Builder(InventoryEditActivity.this)
+                    .setMessage("Are you sure you want to delete this item?")
                     .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                         @Override
-                        public void onClick(DialogInterface dialog, int which) {
+                        public void onClick(final DialogInterface dialog, int which) {
                             viewModel.getItem(itemId).observe(InventoryEditActivity.this, new Observer<InventoryItem>() {
                                 @Override
                                 public void onChanged(@Nullable InventoryItem inventoryItem) {
                                     if (inventoryItem != null) {
+                                        dialog.dismiss();
                                         viewModel.deleteItem(inventoryItem);
                                         finish();
                                     }
@@ -102,6 +106,8 @@ public class InventoryEditActivity extends AppCompatActivity {
                     txtEditModel.setText(inventoryItem.getModel());
                     txtEditBrand.setText(inventoryItem.getBrand());
                     txtEditSupplier.setText(inventoryItem.getSupplier());
+                    imgBitmap = inventoryItem.getThumbnailBitmap();
+                    imgDetailItem.setImageBitmap(imgBitmap);
                 } else {
                     Log.d(TAG, "Inventory item is null");
                 }
@@ -111,7 +117,10 @@ public class InventoryEditActivity extends AppCompatActivity {
         imgDetailItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(InventoryEditActivity.this, "Start ACTION_IMAGE_CAPTURE intent", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                if (intent.resolveActivity(getPackageManager()) != null) {
+                    startActivityForResult(intent, REQUEST_SNAPSHOT);
+                }
             }
         });
     }
@@ -124,21 +133,16 @@ public class InventoryEditActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.actionSaveItem:
-                saveItem();
-                break;
-            case R.id.actionEditDone:
-                finish();
-                break;
-            default:
-                return super.onOptionsItemSelected(item);
+        if (item.getItemId() == R.id.actionSaveItem) {
+            saveItem();
+            finish();
+            return true;
+        } else {
+            return super.onOptionsItemSelected(item);
         }
-        return true;
     }
 
     private void saveItem() {
-        Toast.makeText(this, "Saving item to persistent storage, id: " + itemId, Toast.LENGTH_LONG).show();
         if (txtEditName.getText().toString().isEmpty()) {
             Toast.makeText(this, getString(R.string.warnNameRequired), Toast.LENGTH_LONG).show();
             return;
@@ -158,10 +162,10 @@ public class InventoryEditActivity extends AppCompatActivity {
         item.setName(txtEditName.getText().toString());
         item.setShelf(txtEditShelf.getText().toString());
         item.setModel(txtEditModel.getText().toString());
-        item.setBrand(txtEditModel.getText().toString());
+        item.setBrand(txtEditBrand.getText().toString());
         item.setSupplier(txtEditSupplier.getText().toString());
         item.setBox(txtEditBox.getText().toString());
-
+        item.setThumbnailBitmap(imgBitmap);
 
         if (txtEditQty.getText().length() > 0) {
             item.setQuantity(Integer.parseInt(txtEditQty.getText().toString()));
@@ -177,11 +181,25 @@ public class InventoryEditActivity extends AppCompatActivity {
         return item;
     }
 
-    private int getItemId() {
-        return itemId;
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_SNAPSHOT && resultCode == RESULT_OK) {
+            Bundle extras = data.getExtras();
+            Bitmap image = (Bitmap) extras.get("data");
+            if (image != null) {
+                imgBitmap = image;
+                imgDetailItem.setImageBitmap(image);
+            } else {
+                System.out.println("Image data was null");
+            }
+
+        }
     }
 
-    private void setItemId(int itemId) {
-        this.itemId = itemId;
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        imgBitmap = null;
     }
 }

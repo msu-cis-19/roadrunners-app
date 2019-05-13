@@ -1,8 +1,13 @@
 package edu.msudenver.roadrunners.inventory;
 
 
+import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+
+import java.io.ByteArrayOutputStream;
 
 @Entity(tableName = "items")
 public class InventoryItem {
@@ -10,6 +15,10 @@ public class InventoryItem {
     private Integer id;
 
     private String name;
+
+    @ColumnInfo(typeAffinity = ColumnInfo.BLOB)
+    private byte[] thumbnail;
+
     private double cost;
     private int quantity;
     private String shelf;
@@ -18,21 +27,9 @@ public class InventoryItem {
     private String brand;
     private String supplier;
 
+
     public InventoryItem() {
     }
-
-//    public InventoryItem(int id, String name, double cost, int quantity, String shelf, String box, String model,
-//                         String brand, String supplier) {
-//        this.id = id;
-//        this.name = name;
-//        this.cost = cost;
-//        this.quantity = quantity;
-//        this.shelf = shelf;
-//        this.box = box;
-//        this.model = model;
-//        this.brand = brand;
-//        this.supplier = supplier;
-//    }
 
     public Integer getId() {
         return id;
@@ -111,4 +108,26 @@ public class InventoryItem {
         return id + " - " + name;
     }
 
+    public byte[] getThumbnail() {
+        return thumbnail;
+    }
+
+    public void setThumbnail(byte[] thumbnail) {
+        this.thumbnail = thumbnail;
+    }
+
+    public Bitmap getThumbnailBitmap() {
+        if(thumbnail != null)
+            return BitmapFactory.decodeByteArray(thumbnail, 0, thumbnail.length);
+        else
+            return null;
+    }
+
+    public void setThumbnailBitmap(Bitmap thumbnail) {
+        if(thumbnail != null) {
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            thumbnail.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+            this.thumbnail = stream.toByteArray();
+        }
+    }
 }

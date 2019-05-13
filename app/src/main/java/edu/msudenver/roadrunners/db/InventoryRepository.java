@@ -1,6 +1,5 @@
 package edu.msudenver.roadrunners.db;
 
-
 import android.app.Application;
 import android.arch.lifecycle.LiveData;
 import android.os.AsyncTask;
@@ -10,7 +9,15 @@ import java.util.List;
 
 import edu.msudenver.roadrunners.inventory.InventoryItem;
 
+/*
+* The InventoryRepository provides an interface to the InventoryItemDAO to read/delete/mutate items
+* stored in the SQLite Database.
+*
+* This class wraps methods of the InventoryItemDAO in AsyncTask wrappers, as most database operations
+* complete asynchronously, and thus cannot be directly called from the main application (GUI) Thread
+* */
 public class InventoryRepository {
+    private static final String TAG = InventoryRepository.class.getName();
     private InventoryItemDAO itemDAO;
     private LiveData<List<InventoryItem>> items;
 
@@ -95,7 +102,7 @@ public class InventoryRepository {
         protected Void doInBackground(InventoryItem... inventoryItems) {
             for (InventoryItem item : inventoryItems) {
                 if (item != null) {
-                    Log.d("IR", "deleting inventory item: " + item.getName());
+                    Log.d(TAG, "Deleting inventory item: " + item.getName());
                     dao.deleteItem(item);
                 }
             }

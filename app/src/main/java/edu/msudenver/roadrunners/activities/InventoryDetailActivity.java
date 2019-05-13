@@ -4,6 +4,7 @@ import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -11,6 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.text.NumberFormat;
@@ -21,9 +23,17 @@ import edu.msudenver.roadrunners.inventory.InventoryViewModel;
 
 public class InventoryDetailActivity extends AppCompatActivity {
     private static final String TAG = InventoryDetailActivity.class.getName();
+    private static final NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance();
+
+    static {
+        currencyFormatter.setMinimumFractionDigits(2);
+        currencyFormatter.setMaximumFractionDigits(2);
+    }
+
     private InventoryViewModel viewModel;
     private int itemId;
     private TextView txtTitle, txtCost, txtQty, txtShelf, txtBox, txtModel, txtBrand, txtSupplier;
+    private ImageView imgView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,10 +41,6 @@ public class InventoryDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_inventory_detail);
         Toolbar toolbar = findViewById(R.id.toolbarDetail);
         setSupportActionBar(toolbar);
-
-        final NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance();
-        currencyFormatter.setMinimumFractionDigits(1);
-        currencyFormatter.setMaximumFractionDigits(2);
 
         txtTitle = findViewById(R.id.txtViewTitle);
         txtCost = findViewById(R.id.txtViewCost);
@@ -44,6 +50,7 @@ public class InventoryDetailActivity extends AppCompatActivity {
         txtModel = findViewById(R.id.txtViewModel);
         txtBrand = findViewById(R.id.txtViewBrand);
         txtSupplier = findViewById(R.id.txtViewSupplier);
+        imgView = findViewById(R.id.detailImgView);
 
         viewModel = ViewModelProviders.of(this).get(InventoryViewModel.class);
 
@@ -65,13 +72,20 @@ public class InventoryDetailActivity extends AppCompatActivity {
                     txtModel.setText(item.getModel());
                     txtBrand.setText(item.getBrand());
                     txtSupplier.setText(item.getSupplier());
+                    Bitmap img = item.getThumbnailBitmap();
+                    if(img != null)
+                        imgView.setImageBitmap(item.getThumbnailBitmap());
+                } else {
+                    Log.d(TAG, "Item has been deleted, finishing activity");
+                    finish();
                 }
             }
         });
     }
 
-    private void setItemId(int itemId) {
-        this.itemId = itemId;
+    @Override
+    protected void onResume() {
+        super.onResume();
     }
 
     @Override
@@ -82,21 +96,16 @@ public class InventoryDetailActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.actionEditItem:
-                Intent intent = new Intent(this, InventoryEditActivity.class);
-                intent.putExtra("itemId", itemId);
-                Log.d(TAG, "Editing item: " + itemId);
-                startActivity(intent);
-                break;
-            default:
-                break;
+        if (item.getItemId() == R.id.actionEditItem) {
+            Intent intent = new Intent(this, InventoryEditActivity.class);
+            intent.putExtra("itemId", itemId);
+            Log.d(TAG, "Editing item: " + itemId);
+            startActivity(intent);
         }
         return true;
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-
+    private void setItemId(int itemId) {
+        this.itemId = itemId;
     }
 }

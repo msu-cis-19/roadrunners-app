@@ -7,7 +7,7 @@ import android.content.Context;
 
 import edu.msudenver.roadrunners.inventory.InventoryItem;
 
-@Database(entities = {InventoryItem.class}, version = 1)
+@Database(entities = {InventoryItem.class}, version = 2)
 public abstract class InventoryDB extends RoomDatabase {
 
     private static final String DBNAME = "item_db";

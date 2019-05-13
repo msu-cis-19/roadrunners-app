@@ -67,17 +67,6 @@
         android:textSize="18sp" />
 
     <Button
-        android:id="@+id/btnSearch"
-        android:layout_width="250dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginBottom="10dp"
-        android:background="@color/colorPrimaryDark"
-        android:text="@string/btnSearch"
-        android:textColor="@color/colorPrimary"
-        android:textSize="18sp" />
-
-    <Button
         android:id="@+id/btnInvList"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
